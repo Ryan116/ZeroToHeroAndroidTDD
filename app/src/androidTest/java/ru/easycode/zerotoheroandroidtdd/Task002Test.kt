@@ -19,6 +19,6 @@ class Task002Test {
 
     @Test
     fun test_add_id() {
-        onView(withId(R.id.titleTextView)).check(matches(withText("I am an Android Developer!")))
+        onView(withId(R.id.titleTextView)).check(matches(withText("Hello World!")))
     }
 }
