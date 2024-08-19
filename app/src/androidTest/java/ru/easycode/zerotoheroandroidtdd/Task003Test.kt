@@ -1,6 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
@@ -27,8 +27,8 @@ class Task003Test {
         onView(
             allOf(
                 withId(R.id.titleTextView),
-                withText("I am an Android Developer!"),
-                withParent(isAssignableFrom(LinearLayout::class.java))
+                withText("Hello World!"),
+                withParent(isAssignableFrom(ConstraintLayout::class.java))
             )
         ).check(matches(isDisplayed()))
     }
