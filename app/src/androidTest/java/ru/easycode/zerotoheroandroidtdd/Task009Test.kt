@@ -52,7 +52,7 @@ class Task009Test {
         onView(withId(R.id.removeButton)).perform(click())
         onView(withId(R.id.titleTextView)).check(doesNotExist())
 
-        activityScenarioRule.scenario.recreate()
+         activityScenarioRule.scenario.recreate()
         onView(withId(R.id.titleTextView)).check(doesNotExist())
     }
 }
