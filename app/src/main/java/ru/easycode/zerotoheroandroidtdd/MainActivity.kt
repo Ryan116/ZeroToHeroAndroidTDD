@@ -1,17 +1,19 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.contains
+import androidx.appcompat.app.AppCompatActivity
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
     private var linearLayout: LinearLayout? = null
     private var textView: TextView? = null
     private var button: Button? = null
+    private var state: State = State.Initial
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,33 +21,37 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.removeButton)
         linearLayout = findViewById(R.id.rootLayout)
         button?.setOnClickListener {
-            linearLayout?.removeView(textView)
-            button?.isEnabled = false
+            state = State.Removed
+            (state as State.Removed).remove(linearLayout, textView, button)
         }
         savedInstanceState?.let {
-            if (!it.getBoolean(TEXT_VIEW_EXIST)) {
-                linearLayout?.removeView(textView)
+            state = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                savedInstanceState.getSerializable(STATE_KEY, State::class.java) as State
+            } else {
+                savedInstanceState.getSerializable(STATE_KEY) as State
             }
-            if (!it.getBoolean(BUTTON_ENABLED)) {
-                button?.isEnabled = false
-            }
+            (state as? State.Removed)?.remove(linearLayout, textView, button)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        linearLayout?.let { linearLayoutLocal ->
-            textView?.let { textViewLocal ->
-                outState.putBoolean(TEXT_VIEW_EXIST, linearLayoutLocal.contains(textViewLocal))
-            }
-        }
-        button?.let {
-            outState.putBoolean(BUTTON_ENABLED, it.isEnabled)
-        }
+        outState.putSerializable(STATE_KEY, state)
     }
 
     companion object {
-        const val TEXT_VIEW_EXIST = "text_view_exist_key"
-        const val BUTTON_ENABLED = "button_enabled_key"
+        const val STATE_KEY = "state_key"
+    }
+}
+
+sealed class State : Serializable {
+
+    data object Initial : State()
+
+    data object Removed : State() {
+        fun remove(linearLayout: LinearLayout?, textView: TextView?, button: Button?) {
+            linearLayout?.removeView(textView)
+            button?.isEnabled = false
+        }
     }
 }
