@@ -32,15 +32,14 @@ class MainActivity : AppCompatActivity() {
 interface Count {
 
     fun increment(number: String): String
-    class Base(step: Int) : Count {
+    class Base(private val step: Int) : Count {
 
         init {
             if (step <= 0) throw IllegalStateException( "step should be positive, but was $step")
         }
 
-        private val number: Int = step
-        override fun increment(value: String): String {
-            return (this.number + value.toInt()).toString()
+        override fun increment(number: String): String {
+            return (step + number.toInt()).toString()
         }
     }
 }
