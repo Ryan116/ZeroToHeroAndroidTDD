@@ -1,13 +1,12 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import java.util.TimerTask
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,11 +22,13 @@ class MainActivity : AppCompatActivity() {
         actionButton.setOnClickListener {
             actionButton.isEnabled = false
             progressBar.isVisible = true
-            Handler(Looper.getMainLooper()).postDelayed({
-                progressBar.isVisible = false
-                actionButton.isEnabled = true
-                textView.isVisible = true
-            }, 3000)
+            java.util.Timer().schedule(object : TimerTask() {
+                override fun run() = runOnUiThread {
+                    progressBar.isVisible = false
+                    actionButton.isEnabled = true
+                    textView.isVisible = true
+                }
+            }, 2000)
         }
     }
 }
