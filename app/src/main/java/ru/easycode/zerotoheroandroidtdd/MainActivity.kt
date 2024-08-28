@@ -1,6 +1,8 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -21,11 +23,10 @@ class MainActivity : AppCompatActivity() {
         actionButton.setOnClickListener {
             actionButton.isEnabled = false
             progressBar.isVisible = true
-            actionButton.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 progressBar.isVisible = false
                 actionButton.isEnabled = true
                 textView.isVisible = true
-
             }, 3000)
         }
     }
