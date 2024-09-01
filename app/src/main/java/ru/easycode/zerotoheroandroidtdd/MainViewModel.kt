@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,6 +16,10 @@ class MainViewModel(private val liveDataWrapper: LiveDataWrapper, private val re
             repository.load()
             liveDataWrapper.update(UiState.ShowData)
         }
+    }
+
+    fun getLiveData(): LiveData<UiState> {
+        return liveDataWrapper.liveData()
     }
 
 }

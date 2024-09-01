@@ -12,21 +12,32 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionButton: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var textView: TextView
+    private val repository = Repository.Base()
+    private val liveDataWrapper = LiveDataWrapper.Base()
+    private val viewModel = MainViewModel(liveDataWrapper, repository)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         actionButton = findViewById(R.id.actionButton)
         progressBar = findViewById(R.id.progressBar)
         textView = findViewById(R.id.titleTextView)
-        actionButton.setOnClickListener {
-            actionButton.isEnabled = false
-            progressBar.isVisible = true
-            actionButton.postDelayed({
-                progressBar.isVisible = false
-                actionButton.isEnabled = true
-                textView.isVisible = true
+        viewModel.getLiveData().observe(this) {
+            when (it) {
+                is UiState.ShowProgress -> {
+                    textView.isVisible = false
+                    actionButton.isEnabled = false
+                    progressBar.isVisible = true
+                }
 
-            }, 3000)
+                is UiState.ShowData -> {
+                    progressBar.isVisible = false
+                    actionButton.isEnabled = true
+                    textView.isVisible = true
+                }
+            }
+        }
+        actionButton.setOnClickListener {
+            viewModel.load()
         }
     }
 }

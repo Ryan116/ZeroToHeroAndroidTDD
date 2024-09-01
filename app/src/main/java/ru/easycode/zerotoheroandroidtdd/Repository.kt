@@ -10,7 +10,5 @@ interface Repository {
         override suspend fun load() {
             delay(2000)
         }
-
     }
-
 }
