@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var textView: TextView
 
-    private val viewModel: MainViewModel = MainViewModel(liveDataWrapper = KeepLiveData.liveData, Repository.Base())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         actionButton = findViewById(R.id.actionButton)
         progressBar = findViewById(R.id.progressBar)
         textView = findViewById(R.id.titleTextView)
+        val viewModel = (application as App).viewModel
         viewModel.getLiveData().observe(this) {
             when (it) {
                 is UiState.ShowProgress -> {
@@ -40,8 +40,4 @@ class MainActivity : AppCompatActivity() {
             viewModel.load()
         }
     }
-}
-
-object KeepLiveData {
-    val liveData = LiveDataWrapper.Base()
 }
