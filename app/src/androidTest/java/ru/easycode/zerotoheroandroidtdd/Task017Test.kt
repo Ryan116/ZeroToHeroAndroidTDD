@@ -29,7 +29,7 @@ import org.junit.runner.RunWith
  * @see ru.easycode.zerotoheroandroidtdd.MainViewModelTest
  */
 @RunWith(AndroidJUnit4::class)
-class Task017Test {
+ class Task017Test {
 
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
