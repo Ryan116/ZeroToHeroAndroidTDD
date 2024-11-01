@@ -2,6 +2,7 @@ package ru.easycode.zerotoheroandroidtdd
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.easycode.zerotoheroandroidtdd.databinding.ItemViewBinding
@@ -29,8 +30,32 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>() 
     }
 
     fun update(newList: List<CharSequence>) {
+        val diffUtil = DiffUtilCallback(oldList = listTextView, newList = newList)
+        val diff = DiffUtil.calculateDiff(diffUtil)
         listTextView.clear()
         listTextView.addAll(newList)
-        notifyDataSetChanged()
+        diff.dispatchUpdatesTo(this)
     }
+}
+
+private class DiffUtilCallback(
+    private val oldList: List<CharSequence>,
+    private val newList: List<CharSequence>
+): DiffUtil.Callback() {
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
 }
