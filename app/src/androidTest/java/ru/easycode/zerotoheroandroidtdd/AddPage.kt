@@ -12,7 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textfield.TextInputEditText
 import org.hamcrest.Matchers.allOf
 
-class AddPage : AbstractPage(R.id.addLayout) {
+class AddPage : AbstractPage(R.id.add_layout) {
 
     fun clickSaveButton() {
         onView(

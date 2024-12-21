@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 class MainPage : AbstractPage(R.id.rootLayout) {
 
     fun clickAddButton() {
-        onView(withId(R.id.addButton)).perform(click())
+        onView(withId(R.id.add_button)).perform(click())
     }
 
     fun checkItem(position: Int, text: String) {
