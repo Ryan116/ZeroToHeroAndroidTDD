@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Matchers.allOf
 
-class DeletePage : AbstractPage(R.id.deleteLayout) {
+class DeletePage : AbstractPage(R.id.delete_layout) {
 
     override fun checkVisibleNow() {
         super.checkVisibleNow()
