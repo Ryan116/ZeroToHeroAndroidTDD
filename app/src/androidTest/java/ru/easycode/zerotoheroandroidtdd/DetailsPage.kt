@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textfield.TextInputEditText
 import org.hamcrest.Matchers.allOf
 
-class DetailsPage : AbstractPage(R.id.detailsLayout) {
+class DetailsPage : AbstractPage(R.id.details_layout) {
 
     private val input = onView(
         allOf(

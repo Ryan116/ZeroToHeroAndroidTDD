@@ -2,6 +2,9 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -23,8 +26,12 @@ class DetailsViewModelTest {
     private lateinit var clear: FakeClearViewModel
     private lateinit var viewModel: DetailsViewModel
 
+    private val dispatcher = TestCoroutineDispatcher()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
+        Dispatchers.setMain(dispatcher)
         order = Order()
         liveDataWrapper = FakeListLiveDataWrapper.Base(order)
         repository = FakeRepositoryChange.Base(order)
